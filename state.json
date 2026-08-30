@@ -20,5 +20,11 @@
   "XLV_macd_bearish": "2026-08-30T19:21:54.896049",
   "GLD_volume_spike": "2026-08-30T19:21:54.896050",
   "SLV_volume_spike": "2026-08-30T19:21:54.896052",
-  "ICLN_death_cross": "2026-08-30T19:21:54.896053"
+  "ICLN_death_cross": "2026-08-30T19:21:54.896053",
+  "SUI_macd_bearish": "2026-08-30T19:36:45.091349",
+  "WRAPPED-BITCOIN_rsi_overbought": "2026-08-30T19:36:45.091361",
+  "DAI_macd_bearish": "2026-08-30T19:36:45.091363",
+  "MANTLE_pct_change": "2026-08-30T19:36:45.091365",
+  "MANTLE_rsi_overbought": "2026-08-30T19:36:45.091367",
+  "MANTLE_bb_breakout_up": "2026-08-30T19:36:45.091368"
 }
