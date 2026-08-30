@@ -1,0 +1,40 @@
+name: Market Monitor Bot
+
+on:
+  schedule:
+    # Ogni 30 minuti. Modifica il cron per cambiare frequenza.
+    # Attenzione: GitHub può ritardare l'esecuzione di qualche minuto nei picchi di carico.
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}  # permette di lanciarlo manualmente da GitHub per testare
+
+permissions:
+  contents: write  # serve per poter salvare state.json nel repo
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installa dipendenze
+        run: pip install -r requirements.txt
+
+      - name: Esegui il bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
+
+      - name: Salva lo stato (evita notifiche duplicate)
+        run: |
+          git config user.name "market-bot"
+          git config user.email "market-bot@users.noreply.github.com"
+          git add state.json
+          git diff --staged --quiet || git commit -m "Aggiorna stato segnali [skip ci]"
+          git push
