@@ -5,5 +5,20 @@
   "AAPL_bb_breakout_up": "2026-08-30T14:57:12.032846",
   "MSFT_rsi_overbought": "2026-08-30T14:57:12.032848",
   "MSFT_golden_cross": "2026-08-30T14:57:12.032849",
-  "MSFT_bb_breakout_up": "2026-08-30T14:57:12.032851"
+  "MSFT_bb_breakout_up": "2026-08-30T14:57:12.032851",
+  "BINANCECOIN_rsi_overbought": "2026-08-30T19:21:54.896020",
+  "POLYGON-ECOSYSTEM-TOKEN_pct_change": "2026-08-30T19:21:54.896031",
+  "PG_macd_bearish": "2026-08-30T19:21:54.896032",
+  "ABBV_macd_bearish": "2026-08-30T19:21:54.896034",
+  "KO_macd_bearish": "2026-08-30T19:21:54.896036",
+  "ADBE_bb_breakout_up": "2026-08-30T19:21:54.896038",
+  "CRM_rsi_overbought": "2026-08-30T19:21:54.896039",
+  "CRM_bb_breakout_up": "2026-08-30T19:21:54.896042",
+  "CRM_volume_spike": "2026-08-30T19:21:54.896044",
+  "AMD_macd_bearish": "2026-08-30T19:21:54.896046",
+  "VXUS_macd_bearish": "2026-08-30T19:21:54.896047",
+  "XLV_macd_bearish": "2026-08-30T19:21:54.896049",
+  "GLD_volume_spike": "2026-08-30T19:21:54.896050",
+  "SLV_volume_spike": "2026-08-30T19:21:54.896052",
+  "ICLN_death_cross": "2026-08-30T19:21:54.896053"
 }
