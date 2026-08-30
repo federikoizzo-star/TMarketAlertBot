@@ -1,40 +1,50 @@
 """
 Configurazione del bot: watchlist e soglie per i segnali.
 Modifica liberamente queste liste per personalizzare cosa monitorare.
+
+Universo ampliato (v2 - moderato):
+- Crypto: 40 tra le più liquide/capitalizzate
+- Azioni: 50 (40 USA diversificate per settore + 10 FTSE MIB principali)
+- ETF: 15 su varie asset class
+- Obbligazionari: 4 ETF proxy
+Totale asset monitorati: 109
+
+NOTA: il cron in monitor.yml va tenuto a 30 minuti (non 10) con questo volume
+di asset, per restare comodamente nei minuti gratuiti di GitHub Actions.
 """
 
 # --- CRYPTO ---
 # ID CoinGecko (non il ticker!). Lista completa: https://api.coingecko.com/api/v3/coins/list
 CRYPTO_WATCHLIST = [
-    "bitcoin",
-    "ethereum",
-    "solana",
-    "ripple",
-    "cardano",
+    "bitcoin", "ethereum", "tether", "ripple", "binancecoin", "solana", "usd-coin", "dogecoin",
+    "cardano", "tron", "staked-ether", "chainlink", "avalanche-2", "the-open-network", "shiba-inu", "sui",
+    "wrapped-bitcoin", "bitcoin-cash", "stellar", "polkadot", "hedera-hashgraph", "litecoin", "weth", "leo-token",
+    "hyperliquid", "bitget-token", "uniswap", "near", "ethena-usde", "dai", "pepe", "aptos",
+    "internet-computer", "mantle", "monero", "polygon-ecosystem-token", "okb", "cronos", "aave", "vechain",
 ]
 
 # --- AZIONI ---
+# yfinance usa "-" al posto di "." per le classi di azioni USA (es BRK-B)
+# suffisso .MI per Borsa Italiana
 STOCKS_WATCHLIST = [
-    "AAPL",   # Apple
-    "MSFT",   # Microsoft
-    "NVDA",   # Nvidia
-    "GOOGL",  # Alphabet
-    "TSLA",   # Tesla
+    "AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA", "AVGO",
+    "JPM", "V", "MA", "UNH", "HD", "PG", "JNJ", "XOM",
+    "CVX", "LLY", "MRK", "ABBV", "KO", "PEP", "WMT", "COST",
+    "MCD", "NKE", "DIS", "NFLX", "ADBE", "CRM", "ORCL", "CSCO",
+    "AMD", "INTC", "QCOM", "BA", "CAT", "GE", "GS", "BAC",
+    "UCG.MI", "ISP.MI", "ENEL.MI", "ENI.MI", "RACE.MI", "STLAM.MI", "G.MI", "PST.MI",
+    "LDO.MI", "STM.MI",
 ]
 
 # --- ETF ---
 ETF_WATCHLIST = [
-    "SPY",    # S&P 500
-    "QQQ",    # Nasdaq 100
-    "VWCE.DE",  # FTSE All-World (Vanguard, Xetra) - molto usato in Europa
+    "SPY", "QQQ", "VTI", "VXUS", "VWCE.DE", "XLK", "XLF", "XLE",
+    "XLV", "SMH", "GLD", "SLV", "ARKK", "ICLN", "SCHD",
 ]
 
 # --- OBBLIGAZIONI (via ETF obbligazionari come proxy) ---
 BONDS_WATCHLIST = [
-    "TLT",    # Treasury USA lunga scadenza (20+ anni)
-    "IEF",    # Treasury USA media scadenza (7-10 anni)
-    "AGG",    # Aggregate Bond Market USA
-    "LQD",    # Corporate Bond investment grade USA
+    "TLT", "IEF", "AGG", "LQD",
 ]
 
 # --- SOGLIE SEGNALI ---
