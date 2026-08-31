@@ -1,0 +1,31 @@
+name: Daily Market Report
+
+on:
+  schedule:
+    # Una volta al giorno alle 07:00 UTC (le 08:00 o 09:00 in Italia, a seconda dell'ora legale)
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}  # permette anche l'avvio manuale per testare
+
+permissions:
+  contents: read
+
+jobs:
+  run-daily-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installa dipendenze
+        run: pip install -r requirements.txt
+
+      - name: Esegui il report giornaliero
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python daily_report.py
