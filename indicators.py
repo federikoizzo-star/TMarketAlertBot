@@ -63,6 +63,8 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         emoji = "🟢📈" if pct_change > 0 else "🔴📉"
         signals.append({
             "id": f"{asset_name}_pct_change",
+                "asset": asset_name,
+            "direction": "bullish" if pct_change > 0 else "bearish",
             "message": f"{emoji} *{asset_name}*: {direction} del {pct_change:+.2f}% nelle ultime 24h "
                        f"(prezzo attuale: {today['close']:.4f})",
         })
@@ -72,12 +74,16 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         if today["rsi"] >= THRESHOLDS["rsi_overbought"]:
             signals.append({
                 "id": f"{asset_name}_rsi_overbought",
+                "asset": asset_name,
+                "direction": "bearish",
                 "message": f"⚠️ *{asset_name}*: RSI a {today['rsi']:.1f} — zona ipercomprato "
                            f"(possibile correzione al ribasso in arrivo)",
             })
         elif today["rsi"] <= THRESHOLDS["rsi_oversold"]:
             signals.append({
                 "id": f"{asset_name}_rsi_oversold",
+                "asset": asset_name,
+                "direction": "bullish",
                 "message": f"⚠️ *{asset_name}*: RSI a {today['rsi']:.1f} — zona ipervenduto "
                            f"(possibile rimbalzo al rialzo in arrivo)",
             })
@@ -90,12 +96,16 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         if crossed_up:
             signals.append({
                 "id": f"{asset_name}_golden_cross",
+                "asset": asset_name,
+                "direction": "bullish",
                 "message": f"✨ *{asset_name}*: GOLDEN CROSS — la media a {THRESHOLDS['sma_short']} giorni "
                            f"ha superato quella a {THRESHOLDS['sma_long']} giorni (segnale tecnico rialzista di medio termine)",
             })
         if crossed_down:
             signals.append({
                 "id": f"{asset_name}_death_cross",
+                "asset": asset_name,
+                "direction": "bearish",
                 "message": f"💀 *{asset_name}*: DEATH CROSS — la media a {THRESHOLDS['sma_short']} giorni "
                            f"è scesa sotto quella a {THRESHOLDS['sma_long']} giorni (segnale tecnico ribassista di medio termine)",
             })
@@ -108,12 +118,16 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         if macd_cross_up:
             signals.append({
                 "id": f"{asset_name}_macd_bullish",
+                "asset": asset_name,
+                "direction": "bullish",
                 "message": f"📊 *{asset_name}*: MACD ha incrociato al rialzo la signal line "
                            f"(momentum a favore dei rialzisti)",
             })
         if macd_cross_down:
             signals.append({
                 "id": f"{asset_name}_macd_bearish",
+                "asset": asset_name,
+                "direction": "bearish",
                 "message": f"📊 *{asset_name}*: MACD ha incrociato al ribasso la signal line "
                            f"(momentum a favore dei ribassisti)",
             })
@@ -123,12 +137,16 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         if today["close"] > today["bb_high"]:
             signals.append({
                 "id": f"{asset_name}_bb_breakout_up",
+                "asset": asset_name,
+                "direction": "bullish",
                 "message": f"📈 *{asset_name}*: prezzo sopra la banda di Bollinger superiore "
                            f"(forte momentum rialzista o possibile ipercomprato)",
             })
         elif today["close"] < today["bb_low"]:
             signals.append({
                 "id": f"{asset_name}_bb_breakout_down",
+                "asset": asset_name,
+                "direction": "bearish",
                 "message": f"📉 *{asset_name}*: prezzo sotto la banda di Bollinger inferiore "
                            f"(forte momentum ribassista o possibile ipervenduto)",
             })
@@ -138,8 +156,11 @@ def evaluate_signals(df: pd.DataFrame, asset_name: str) -> list[dict]:
         if today["volume_avg"] > 0 and today["volume"] >= today["volume_avg"] * THRESHOLDS["volume_spike_multiplier"]:
             signals.append({
                 "id": f"{asset_name}_volume_spike",
+                "asset": asset_name,
+                "direction": "neutral",
                 "message": f"🔊 *{asset_name}*: volume anomalo, {today['volume'] / today['volume_avg']:.1f}x "
                            f"la media — possibile mossa importante in corso",
             })
 
     return signals
+    
