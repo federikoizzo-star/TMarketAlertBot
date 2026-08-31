@@ -44,5 +44,8 @@
   "ETHENA-USDE_macd_bearish": "2026-08-31T02:08:37.728146",
   "DOGECOIN_macd_bearish": "2026-08-31T03:08:23.044402",
   "STAKED-ETHER_golden_cross": "2026-08-31T03:08:23.044414",
-  "HEDERA-HASHGRAPH_macd_bearish": "2026-08-31T03:08:23.044416"
+  "HEDERA-HASHGRAPH_macd_bearish": "2026-08-31T03:08:23.044416",
+  "UNISWAP_volume_spike": "2026-08-31T03:39:01.854512",
+  "DAI_macd_bullish": "2026-08-31T03:39:01.854520",
+  "VECHAIN_rsi_overbought": "2026-08-31T03:39:01.854522"
 }
