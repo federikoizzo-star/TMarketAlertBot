@@ -2,10 +2,10 @@
   "BITCOIN_rsi_overbought": "2026-08-30T14:57:12.032837",
   "ETHEREUM_rsi_overbought": "2026-08-30T14:57:12.032843",
   "SOLANA_rsi_overbought": "2026-08-30T14:57:12.032845",
-  "AAPL_bb_breakout_up": "2026-08-30T14:57:12.032846",
-  "MSFT_rsi_overbought": "2026-08-30T14:57:12.032848",
-  "MSFT_golden_cross": "2026-08-30T14:57:12.032849",
-  "MSFT_bb_breakout_up": "2026-08-30T14:57:12.032851",
+  "AAPL_bb_breakout_up": "2026-08-31T03:08:23.044417",
+  "MSFT_rsi_overbought": "2026-08-31T03:08:23.044419",
+  "MSFT_golden_cross": "2026-08-31T03:08:23.044421",
+  "MSFT_bb_breakout_up": "2026-08-31T03:08:23.044422",
   "BINANCECOIN_rsi_overbought": "2026-08-30T19:21:54.896020",
   "POLYGON-ECOSYSTEM-TOKEN_pct_change": "2026-08-30T19:21:54.896031",
   "PG_macd_bearish": "2026-08-30T19:21:54.896032",
@@ -41,5 +41,8 @@
   "PEPE_macd_bearish": "2026-08-31T00:37:46.682307",
   "INTERNET-COMPUTER_macd_bearish": "2026-08-31T00:37:46.682309",
   "POLYGON-ECOSYSTEM-TOKEN_macd_bearish": "2026-08-31T00:37:46.682310",
-  "ETHENA-USDE_macd_bearish": "2026-08-31T02:08:37.728146"
+  "ETHENA-USDE_macd_bearish": "2026-08-31T02:08:37.728146",
+  "DOGECOIN_macd_bearish": "2026-08-31T03:08:23.044402",
+  "STAKED-ETHER_golden_cross": "2026-08-31T03:08:23.044414",
+  "HEDERA-HASHGRAPH_macd_bearish": "2026-08-31T03:08:23.044416"
 }
