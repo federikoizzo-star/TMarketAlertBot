@@ -1,13 +1,19 @@
 """
-Report giornaliero unico: movimenti anomali di oggi, miglior asset del momento,
-e backtest a 7 giorni (bot vs Bitcoin, al netto di commissioni e tasse).
-Va eseguito una volta al giorno (vedi daily_report.yml).
+Report giornaliero: movimenti anomali di oggi, miglior asset del momento, e un
+esperimento "in avanti" (paper trading reale, non backtest sul passato) che
+segue i segnali del bot per 7 giorni a partire da quando parte per la prima
+volta, confrontandolo con Bitcoin buy&hold nello stesso periodo. Dopo 7 giorni
+il ciclo si chiude e ne parte uno nuovo automaticamente.
+
+Lo stato dell'esperimento (giorno in corso, valore del portafoglio virtuale,
+storico operazioni) viene salvato in paper_state.json e committato nel repo
+a ogni esecuzione (vedi daily_report.yml).
 """
 import os
 import sys
 import time
-
-import pandas as pd
+import json
+from datetime import date
 
 from config import CRYPTO_WATCHLIST, STOCKS_WATCHLIST, ETF_WATCHLIST, BONDS_WATCHLIST
 from data_sources import fetch_crypto_history, fetch_yfinance_history, safe_fetch
@@ -15,12 +21,14 @@ from indicators import compute_indicators, evaluate_signals
 from notifier import send_telegram_message
 
 COINGECKO_DELAY_SECONDS = 2.0
-BACKTEST_DAYS = 7
+EXPERIMENT_DAYS = 7
 STARTING_CAPITAL = 100.0
 MIN_BULLISH_SCORE = 2
 
 TRADING_FEE_PCT = 0.001
 CAPITAL_GAINS_TAX_PCT = 0.26
+
+PAPER_STATE_FILE = "paper_state.json"
 
 
 def pick_of_the_day(all_signals_today: list[dict]):
@@ -34,11 +42,23 @@ def pick_of_the_day(all_signals_today: list[dict]):
         scores[asset][direction] += 1
     candidates = {a: v["bullish"] for a, v in scores.items() if v["bearish"] == 0 and v["bullish"] > 0}
     if not candidates:
-        return None
+        return None, 0
     best = max(candidates, key=candidates.get)
     if candidates[best] < MIN_BULLISH_SCORE:
-        return None
-    return best
+        return None, 0
+    return best, candidates[best]
+
+
+def load_paper_state():
+    if os.path.exists(PAPER_STATE_FILE):
+        with open(PAPER_STATE_FILE) as f:
+            return json.load(f)
+    return None
+
+
+def save_paper_state(state):
+    with open(PAPER_STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
 
 
 def apply_capital_gains_tax(final_value, starting_capital):
@@ -56,7 +76,7 @@ def main():
         print("[ERRORE] Mancano TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID")
         sys.exit(1)
 
-    # --- Scarico lo storico di tutti gli asset (una volta, riusato sia per oggi che per il backtest) ---
+    # --- Scarico lo storico di tutti gli asset ---
     histories = {}
 
     print(f"Scarico storico per {len(CRYPTO_WATCHLIST)} crypto...")
@@ -89,6 +109,9 @@ def main():
         print("[ERRORE] Impossibile scaricare Bitcoin, serve come benchmark.")
         sys.exit(1)
 
+    today_str = date.today().isoformat()
+    btc_today_price = float(histories["BITCOIN"]["close"].iloc[-1])
+
     # ============================================================
     # SEZIONE 1 — Movimenti anomali di OGGI
     # ============================================================
@@ -101,63 +124,57 @@ def main():
         today_signals.extend(evaluate_signals(df_ind, name))
 
     # ============================================================
-    # SEZIONE 2 — Miglior asset del momento (stessa logica di oggi)
+    # SEZIONE 2 — Miglior asset del momento
     # ============================================================
-    best_pick = pick_of_the_day(today_signals)
-    best_score = None
-    if best_pick:
-        scores = {}
-        for s in today_signals:
-            if s.get("asset") == best_pick and s.get("direction") == "bullish":
-                scores[best_pick] = scores.get(best_pick, 0) + 1
-        best_score = scores.get(best_pick, 0)
+    best_pick, best_score = pick_of_the_day(today_signals)
 
     # ============================================================
-    # SEZIONE 3 e 4 — Backtest 7 giorni: bot vs Bitcoin
+    # SEZIONE 3 e 4 — Esperimento in avanti: carico/aggiorno lo stato
     # ============================================================
-    print("\nBacktest ultimi 7 giorni...")
-    btc_df = histories["BITCOIN"]
-    all_days = pd.date_range(end=btc_df.index.max().normalize(), periods=BACKTEST_DAYS + 1, freq="D")
+    state = load_paper_state()
+    if state is None or state.get("day_number", 0) >= EXPERIMENT_DAYS:
+        # Nuovo ciclo: si riparte da zero
+        state = {
+            "start_date": today_str,
+            "day_number": 0,
+            "portfolio_value": STARTING_CAPITAL,
+            "btc_start_price": btc_today_price,
+            "trade_log": [],
+        }
 
-    aligned = {}
-    for name, df in histories.items():
-        s = df["close"].reindex(df.index.union(all_days)).sort_index().ffill()
-        aligned[name] = s.reindex(all_days)
-
-    portfolio_value = STARTING_CAPITAL
-    trade_days = 0
-    for d in range(1, len(all_days)):
-        cutoff = all_days[d]
-        day_signals = []
-        for name, df in histories.items():
-            df_slice = df[df.index <= cutoff]
-            if len(df_slice) < 30:
-                continue
-            df_ind = compute_indicators(df_slice)
-            day_signals.extend(evaluate_signals(df_ind, name))
-        pick = pick_of_the_day(day_signals)
-        if pick and pick in aligned:
-            prev_price = aligned[pick].iloc[d - 1]
-            today_price = aligned[pick].iloc[d]
-            if pd.notna(prev_price) and pd.notna(today_price) and prev_price > 0:
+    already_logged_today = any(entry.startswith(today_str) for entry in state["trade_log"])
+    if not already_logged_today:
+        if best_pick and best_pick in histories and len(histories[best_pick]) >= 2:
+            prev_price = float(histories[best_pick]["close"].iloc[-2])
+            today_price = float(histories[best_pick]["close"].iloc[-1])
+            if prev_price > 0:
                 day_return = (today_price / prev_price) - 1
-                trade_days += 1
-                portfolio_value *= (1 - TRADING_FEE_PCT)
-                portfolio_value *= (1 + day_return)
-                portfolio_value *= (1 - TRADING_FEE_PCT)
+                state["portfolio_value"] *= (1 - TRADING_FEE_PCT)
+                state["portfolio_value"] *= (1 + day_return)
+                state["portfolio_value"] *= (1 - TRADING_FEE_PCT)
+                state["trade_log"].append(
+                    f"{today_str}: {best_pick} ({day_return*100:+.2f}%) → €{state['portfolio_value']:.2f}"
+                )
+        else:
+            state["trade_log"].append(f"{today_str}: nessuna operazione (nessun segnale valido)")
+        state["day_number"] += 1
 
-    btc_start = aligned["BITCOIN"].iloc[0]
-    btc_end = aligned["BITCOIN"].iloc[-1]
-    btc_gross_return = (btc_end / btc_start) - 1
-    btc_value = STARTING_CAPITAL * (1 - TRADING_FEE_PCT) * (1 + btc_gross_return) * (1 - TRADING_FEE_PCT)
+    save_paper_state(state)
 
-    bot_net_value, bot_tax = apply_capital_gains_tax(portfolio_value, STARTING_CAPITAL)
-    btc_net_value, btc_tax = apply_capital_gains_tax(btc_value, STARTING_CAPITAL)
+    # --- Valori correnti (come se chiudessi oggi) ---
+    bot_net_value, bot_tax = apply_capital_gains_tax(state["portfolio_value"], STARTING_CAPITAL)
     bot_gain = bot_net_value - STARTING_CAPITAL
+
+    btc_gross_return = (btc_today_price / state["btc_start_price"]) - 1
+    btc_value = STARTING_CAPITAL * (1 - TRADING_FEE_PCT) * (1 + btc_gross_return) * (1 - TRADING_FEE_PCT)
+    btc_net_value, btc_tax = apply_capital_gains_tax(btc_value, STARTING_CAPITAL)
     btc_gain = btc_net_value - STARTING_CAPITAL
 
+    day_number = state["day_number"]
+    is_final_day = day_number >= EXPERIMENT_DAYS
+
     # ============================================================
-    # Composizione del messaggio, nell'ordine richiesto
+    # Composizione del messaggio
     # ============================================================
     parts = []
 
@@ -179,21 +196,28 @@ def main():
     else:
         parts.append("_Nessun asset con segnale abbastanza forte in questo momento._")
 
+    header_giorno = "🏁 *Settimana conclusa!*" if is_final_day else f"📊 *Esperimento in corso — Giorno {day_number}/{EXPERIMENT_DAYS}*"
     parts.append(
-        f"━━━━━━━━━━━━━━\n📊 *Simulazione: €{STARTING_CAPITAL:.0f} seguendo il bot (ultimi {BACKTEST_DAYS} giorni)*\n"
-        f"{trade_days} operazioni · commissioni {TRADING_FEE_PCT*100:.1f}%/operazione · tasse {CAPITAL_GAINS_TAX_PCT*100:.0f}% sulla plusvalenza\n"
-        f"€{STARTING_CAPITAL:.2f} → *€{bot_net_value:.2f}* netti ({bot_gain:+.2f}€, {bot_gain/STARTING_CAPITAL*100:+.2f}%)"
+        f"━━━━━━━━━━━━━━\n{header_giorno}\n"
+        f"€{STARTING_CAPITAL:.2f} → *€{bot_net_value:.2f}* netti se chiudessi oggi "
+        f"({bot_gain:+.2f}€, {bot_gain/STARTING_CAPITAL*100:+.2f}%)\n"
+        f"(commissioni {TRADING_FEE_PCT*100:.1f}%/operazione, tasse {CAPITAL_GAINS_TAX_PCT*100:.0f}% sulla plusvalenza se in guadagno)\n\n"
+        f"📋 _Cosa ha comprato, giorno per giorno:_\n" + "\n".join(state["trade_log"])
     )
 
     parts.append(
-        f"━━━━━━━━━━━━━━\n₿ *Simulazione: €{STARTING_CAPITAL:.0f} su Bitcoin buy&hold (stesso periodo)*\n"
-        f"€{STARTING_CAPITAL:.2f} → *€{btc_net_value:.2f}* netti ({btc_gain:+.2f}€, {btc_gain/STARTING_CAPITAL*100:+.2f}%)"
+        f"━━━━━━━━━━━━━━\n₿ *Bitcoin buy&hold, stesso periodo (dal {state['start_date']})*\n"
+        f"€{STARTING_CAPITAL:.2f} → *€{btc_net_value:.2f}* netti se vendessi oggi "
+        f"({btc_gain:+.2f}€, {btc_gain/STARTING_CAPITAL*100:+.2f}%)"
     )
 
-    parts.append(
-        "_7 giorni sono un campione piccolo, poco significativo statisticamente. "
-        "Performance passata (anche simulata) non garantisce risultati futuri._"
-    )
+    if is_final_day:
+        parts.append("_Ciclo di 7 giorni completato — da domani ne parte uno nuovo da zero._")
+    else:
+        parts.append(
+            f"_Valori \"se chiudessi oggi\": la posizione non è realmente chiusa, è solo una stima corrente. "
+            f"{EXPERIMENT_DAYS - day_number} giorni rimanenti in questo ciclo._"
+        )
 
     message = "\n\n".join(parts)
     print("\n\n" + message)
@@ -202,3 +226,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
