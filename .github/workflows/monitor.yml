@@ -1,14 +1,13 @@
 name: Market Monitor Bot
 
 on:
-  schedule:
-    # Ogni 30 minuti. Modifica il cron per cambiare frequenza.
-    # Attenzione: GitHub può ritardare l'esecuzione di qualche minuto nei picchi di carico.
-    - cron: "*/30 * * * *"
-  workflow_dispatch: {}  # permette di lanciarlo manualmente da GitHub per testare
+  # Il cron ogni 30 minuti e' stato disattivato: il report giornaliero
+  # (daily_report.yml) lo sostituisce con un unico messaggio piu' completo.
+  # Rimane disponibile solo l'avvio manuale, se vuoi testare o usarlo ancora.
+  workflow_dispatch: {}
 
 permissions:
-  contents: write  # serve per poter salvare state.json nel repo
+  contents: write
 
 jobs:
   run-bot:
