@@ -1,13 +1,14 @@
 {
   "start_date": "2026-08-31",
-  "day_number": 5,
-  "portfolio_value": 110.75393911975368,
+  "day_number": 6,
+  "portfolio_value": 121.3016156893966,
   "btc_start_price": 78450.933978871,
   "trade_log": [
     "2026-08-31: nessuna operazione (nessun segnale valido)",
     "2026-09-01: TSLA (+5.51%) \u2192 \u20ac105.29",
     "2026-09-02: nessuna operazione (nessun segnale valido)",
     "2026-09-03: APTOS (+5.40%) \u2192 \u20ac110.75",
-    "2026-09-04: nessuna operazione (nessun segnale valido)"
+    "2026-09-04: nessuna operazione (nessun segnale valido)",
+    "2026-09-05: INTERNET-COMPUTER (+9.74%) \u2192 \u20ac121.30"
   ]
 }
