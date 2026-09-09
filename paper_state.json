@@ -1,10 +1,11 @@
 {
   "start_date": "2026-09-07",
-  "day_number": 2,
+  "day_number": 3,
   "portfolio_value": 100.0,
   "btc_start_price": 79600.52105771842,
   "trade_log": [
     "2026-09-07: nessuna operazione (nessun segnale valido)",
-    "2026-09-08: nessuna operazione (nessun segnale valido)"
+    "2026-09-08: nessuna operazione (nessun segnale valido)",
+    "2026-09-09: nessuna operazione (nessun segnale valido)"
   ]
 }
