@@ -1,6 +1,6 @@
 {
   "start_date": "2026-09-14",
-  "day_number": 6,
+  "day_number": 7,
   "portfolio_value": 110.39794606486007,
   "btc_start_price": 77669.54642974834,
   "trade_log": [
@@ -9,6 +9,7 @@
     "2026-09-16: nessuna operazione (nessun segnale valido)",
     "2026-09-17: nessuna operazione (nessun segnale valido)",
     "2026-09-18: APTOS (+11.77%) \u2192 \u20ac111.55",
-    "2026-09-19: SOLANA (-0.83%) \u2192 \u20ac110.40"
+    "2026-09-19: SOLANA (-0.83%) \u2192 \u20ac110.40",
+    "2026-09-20: nessuna operazione (nessun segnale valido)"
   ]
 }
