@@ -1,9 +1,10 @@
 {
   "start_date": "2026-09-21",
-  "day_number": 1,
-  "portfolio_value": 100.0,
+  "day_number": 2,
+  "portfolio_value": 109.07142056867066,
   "btc_start_price": 81621.64872961273,
   "trade_log": [
-    "2026-09-21: nessuna operazione (nessun segnale valido)"
+    "2026-09-21: nessuna operazione (nessun segnale valido)",
+    "2026-09-22: QCOM (+9.29%) \u2192 \u20ac109.07"
   ]
 }
