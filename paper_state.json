@@ -1,12 +1,13 @@
 {
   "start_date": "2026-09-21",
-  "day_number": 4,
+  "day_number": 5,
   "portfolio_value": 110.37735788550829,
   "btc_start_price": 81621.64872961273,
   "trade_log": [
     "2026-09-21: nessuna operazione (nessun segnale valido)",
     "2026-09-22: QCOM (+9.29%) \u2192 \u20ac109.07",
     "2026-09-23: VWCE.DE (+1.40%) \u2192 \u20ac110.38",
-    "2026-09-24: nessuna operazione (nessun segnale valido)"
+    "2026-09-24: nessuna operazione (nessun segnale valido)",
+    "2026-09-25: nessuna operazione (nessun segnale valido)"
   ]
 }
