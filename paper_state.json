@@ -1,15 +1,9 @@
 {
-  "start_date": "2026-09-28",
-  "day_number": 7,
-  "portfolio_value": 114.44380041726845,
-  "btc_start_price": 83122.26343029484,
+  "start_date": "2026-10-05",
+  "day_number": 1,
+  "portfolio_value": 100.0,
+  "btc_start_price": 85530.80316058414,
   "trade_log": [
-    "2026-09-28: nessuna operazione (nessun segnale valido)",
-    "2026-09-29: nessuna operazione (nessun segnale valido)",
-    "2026-09-30: nessuna operazione (nessun segnale valido)",
-    "2026-10-01: MSFT (+1.18%) \u2192 \u20ac100.98",
-    "2026-10-02: nessuna operazione (nessun segnale valido)",
-    "2026-10-03: STMMI.MI (+6.67%) \u2192 \u20ac107.50",
-    "2026-10-04: STMMI.MI (+6.67%) \u2192 \u20ac114.44"
+    "2026-10-05: nessuna operazione (nessun segnale valido)"
   ]
 }
