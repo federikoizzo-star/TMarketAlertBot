@@ -1,11 +1,12 @@
 {
   "start_date": "2026-10-05",
-  "day_number": 3,
-  "portfolio_value": 101.63189117548919,
+  "day_number": 4,
+  "portfolio_value": 103.9607832063503,
   "btc_start_price": 85530.80316058414,
   "trade_log": [
     "2026-10-05: nessuna operazione (nessun segnale valido)",
     "2026-10-06: nessuna operazione (nessun segnale valido)",
-    "2026-10-07: ABBV (+1.84%) \u2192 \u20ac101.63"
+    "2026-10-07: ABBV (+1.84%) \u2192 \u20ac101.63",
+    "2026-10-08: ENI.MI (+2.50%) \u2192 \u20ac103.96"
   ]
 }
