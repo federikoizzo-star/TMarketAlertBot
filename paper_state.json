@@ -1,12 +1,13 @@
 {
   "start_date": "2026-10-12",
-  "day_number": 4,
-  "portfolio_value": 101.30894063651307,
+  "day_number": 5,
+  "portfolio_value": 106.37656116691448,
   "btc_start_price": 82859.39972547127,
   "trade_log": [
     "2026-10-12: nessuna operazione (nessun segnale valido)",
     "2026-10-13: AAPL (+1.51%) \u2192 \u20ac101.31",
     "2026-10-14: nessuna operazione (nessun segnale valido)",
-    "2026-10-15: nessuna operazione (nessun segnale valido)"
+    "2026-10-15: nessuna operazione (nessun segnale valido)",
+    "2026-10-16: NKE (+5.21%) \u2192 \u20ac106.38"
   ]
 }
