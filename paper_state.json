@@ -1,12 +1,13 @@
 {
   "start_date": "2026-10-26",
-  "day_number": 4,
+  "day_number": 5,
   "portfolio_value": 116.64358953532616,
   "btc_start_price": 79665.30816476453,
   "trade_log": [
     "2026-10-26: TSLA (+5.68%) \u2192 \u20ac105.47",
     "2026-10-27: TSLA (+5.21%) \u2192 \u20ac110.74",
     "2026-10-28: PEPE (+5.54%) \u2192 \u20ac116.64",
-    "2026-10-29: nessuna operazione (nessun segnale valido)"
+    "2026-10-29: nessuna operazione (nessun segnale valido)",
+    "2026-10-30: nessuna operazione (nessun segnale valido)"
   ]
 }
