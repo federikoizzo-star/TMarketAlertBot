@@ -1,13 +1,14 @@
 {
   "start_date": "2026-11-02",
-  "day_number": 5,
-  "portfolio_value": 116.51139308659215,
+  "day_number": 6,
+  "portfolio_value": 125.2469492024358,
   "btc_start_price": 77427.61094158016,
   "trade_log": [
     "2026-11-02: nessuna operazione (nessun segnale valido)",
     "2026-11-03: nessuna operazione (nessun segnale valido)",
     "2026-11-04: AMZN (+8.08%) \u2192 \u20ac107.87",
     "2026-11-05: nessuna operazione (nessun segnale valido)",
-    "2026-11-06: INTC (+8.23%) \u2192 \u20ac116.51"
+    "2026-11-06: INTC (+8.23%) \u2192 \u20ac116.51",
+    "2026-11-07: INTC (+7.71%) \u2192 \u20ac125.25"
   ]
 }
