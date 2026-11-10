@@ -1,9 +1,10 @@
 {
   "start_date": "2026-11-09",
-  "day_number": 1,
-  "portfolio_value": 106.22853326302716,
+  "day_number": 2,
+  "portfolio_value": 112.69667251991049,
   "btc_start_price": 74977.79361851152,
   "trade_log": [
-    "2026-11-09: PEPE (+6.44%) \u2192 \u20ac106.23"
+    "2026-11-09: PEPE (+6.44%) \u2192 \u20ac106.23",
+    "2026-11-10: PEPE (+6.30%) \u2192 \u20ac112.70"
   ]
 }
