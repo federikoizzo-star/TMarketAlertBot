@@ -1,11 +1,12 @@
 {
   "start_date": "2026-11-09",
-  "day_number": 3,
+  "day_number": 4,
   "portfolio_value": 118.95242919946068,
   "btc_start_price": 74977.79361851152,
   "trade_log": [
     "2026-11-09: PEPE (+6.44%) \u2192 \u20ac106.23",
     "2026-11-10: PEPE (+6.30%) \u2192 \u20ac112.70",
-    "2026-11-11: AVGO (+5.76%) \u2192 \u20ac118.95"
+    "2026-11-11: AVGO (+5.76%) \u2192 \u20ac118.95",
+    "2026-11-12: nessuna operazione (nessun segnale valido)"
   ]
 }
