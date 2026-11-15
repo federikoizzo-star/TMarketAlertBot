@@ -1,7 +1,7 @@
 {
   "start_date": "2026-11-09",
-  "day_number": 6,
-  "portfolio_value": 118.95242919946068,
+  "day_number": 7,
+  "portfolio_value": 125.5373970002612,
   "btc_start_price": 74977.79361851152,
   "trade_log": [
     "2026-11-09: PEPE (+6.44%) \u2192 \u20ac106.23",
@@ -9,6 +9,7 @@
     "2026-11-11: AVGO (+5.76%) \u2192 \u20ac118.95",
     "2026-11-12: nessuna operazione (nessun segnale valido)",
     "2026-11-13: nessuna operazione (nessun segnale valido)",
-    "2026-11-14: nessuna operazione (nessun segnale valido)"
+    "2026-11-14: nessuna operazione (nessun segnale valido)",
+    "2026-11-15: RIPPLE (+5.75%) \u2192 \u20ac125.54"
   ]
 }
