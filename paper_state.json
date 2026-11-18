@@ -1,10 +1,11 @@
 {
   "start_date": "2026-11-16",
-  "day_number": 2,
-  "portfolio_value": 110.33965133474342,
+  "day_number": 3,
+  "portfolio_value": 108.46240985106026,
   "btc_start_price": 64587.23332396467,
   "trade_log": [
     "2026-11-16: INTERNET-COMPUTER (+10.56%) \u2192 \u20ac110.34",
-    "2026-11-17: nessuna operazione (nessun segnale valido)"
+    "2026-11-17: nessuna operazione (nessun segnale valido)",
+    "2026-11-18: INTC (-1.50%) \u2192 \u20ac108.46"
   ]
 }
