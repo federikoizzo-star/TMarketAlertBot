@@ -1,9 +1,10 @@
 {
   "start_date": "2026-11-23",
-  "day_number": 1,
+  "day_number": 2,
   "portfolio_value": 106.61670547494238,
   "btc_start_price": 61306.63399650591,
   "trade_log": [
-    "2026-11-23: GOOGL (+6.83%) \u2192 \u20ac106.62"
+    "2026-11-23: GOOGL (+6.83%) \u2192 \u20ac106.62",
+    "2026-11-24: nessuna operazione (nessun segnale valido)"
   ]
 }
