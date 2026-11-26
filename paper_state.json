@@ -1,11 +1,12 @@
 {
   "start_date": "2026-11-23",
-  "day_number": 3,
-  "portfolio_value": 106.61670547494238,
+  "day_number": 4,
+  "portfolio_value": 106.46720592808609,
   "btc_start_price": 61306.63399650591,
   "trade_log": [
     "2026-11-23: GOOGL (+6.83%) \u2192 \u20ac106.62",
     "2026-11-24: nessuna operazione (nessun segnale valido)",
-    "2026-11-25: nessuna operazione (nessun segnale valido)"
+    "2026-11-25: nessuna operazione (nessun segnale valido)",
+    "2026-11-26: ETHEREUM (+0.06%) \u2192 \u20ac106.47"
   ]
 }
